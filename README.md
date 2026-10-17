@@ -97,19 +97,20 @@ The obvious comparison — "bubble sort" versus "cocktail shaker with early exit
 
 | Input (n = 2000) | `bubble_sort` | `bubble_sort_early` | `cocktail_sort` |
 |---|---|---|---|
-| already sorted | 66.46 ms | 0.0716 ms — **929×** | 0.0718 ms — **926×** |
+| already sorted | 66.46 ms | 0.0716 ms — **928×** | 0.0718 ms — **926×** |
 | 50 adjacent swaps | 66.00 ms | 0.1430 ms — **462×** | 0.1741 ms — **379×** |
-| 50 far-apart swaps | 68.55 ms | 69.56 ms — 1.0× | 6.82 ms — **10.1×** |
-| random | 111.87 ms | 114.52 ms — 1.0× | 102.40 ms — **1.09×** |
-| reversed | 150.30 ms | 151.17 ms — 1.0× | 155.28 ms — **0.97×** |
+| 50 far-apart swaps | 68.55 ms | 69.56 ms — 0.99× | 6.82 ms — **10.1×** |
+| random | 111.87 ms | 114.52 ms — 0.98× | 102.40 ms — **1.09×** |
+| reversed | 150.30 ms | 151.17 ms — 0.99× | 155.28 ms — **0.97×** |
 
 `×` is how many times faster than `bubble_sort`; `1.0×` means no change, below 1
 means slower.
 
-- **Early exit alone** captures everything on genuinely near-sorted data: 929×
+- **Early exit alone** captures everything on genuinely near-sorted data: 928×
   on sorted input, and the bidirectional pass adds nothing on top of it.
 - **Bidirectional alone** is what saves "few inversions, far apart" — 10.1× on
-  the far-apart shape, where the early exit is worth exactly nothing (1.02×).
+  the far-apart shape, where the early exit is worth nothing (0.99×, fractionally
+  slower).
 - **On reversed input** the cocktail version is 3% *slower*: every pass swaps
   every pair, and the second sweep is pure overhead.
 - On random data the two are within ±10%, which is the machine's noise floor.
