@@ -148,10 +148,107 @@ def build(width, height, path, scale):
     print("wrote", path, img.size)
 
 
+def load_sorting():
+    """Rows of (shape, naive_ms, early_ms, cocktail_ms) from the measured JSON."""
+    with open(RESULTS, encoding="utf-8") as fh:
+        data = json.load(fh)
+    order = ("sorted", "adjacent-50", "far-50", "random", "reversed")
+    pretty = {
+        "sorted": "already sorted",
+        "adjacent-50": "50 adjacent swaps",
+        "far-50": "50 far-apart swaps",
+        "random": "random",
+        "reversed": "reversed",
+    }
+    rows = []
+    for shape in order:
+        case = data["cases"][f"sort/{shape}/2000"]["variants"]
+        rows.append((
+            pretty[shape],
+            case["naive"]["best_ms"],
+            case["early"]["best_ms"],
+            case["cocktail"]["best_ms"],
+        ))
+    return rows, f"{data['machine']['implementation']} {data['machine']['python']}"
+
+
+def build_sorting(width, height, path):
+    """Impact map: speedup over plain bubble sort, log scale, 1.0x marked."""
+    img = Image.new("RGB", (width, height), PAPER)
+    draw = wash(img, height)
+    rows, machine = load_sorting()
+
+    pad = 56
+    draw.text((pad, 26), "WHERE EACH CHANGE ACTUALLY PAYS OFF", font=font(12, mono=True), fill=INK3)
+    tw = draw.textlength(machine, font=font(12, mono=True))
+    draw.text((width - pad - tw, 26), machine, font=font(12, mono=True), fill=INK3)
+
+    draw.text((pad, 46), "Two changes, two different inputs.", font=font(34, bold=True), fill=INK)
+
+    # legend
+    ly = 104
+    lx = pad
+    for label, colour in (("early exit", AMBER), ("+ bidirectional", CLAY)):
+        draw.rounded_rectangle([lx, ly, lx + 22, ly + 12], radius=3, fill=colour)
+        draw.text((lx + 30, ly - 4), label, font=font(14), fill=INK2)
+        lx += 30 + draw.textlength(label, font=font(14)) + 34
+    draw.text((lx + 10, ly - 4), "·  right of the 1x line = faster than plain bubble sort",
+              font=font(14), fill=INK3)
+
+    x0, x1 = pad + 196, width - pad - 118
+    top = 152
+    row_h = 70
+    bar_h = 19
+    lo, hi = 0.9, 1100.0
+    import math
+
+    def sx(v):
+        frac = (math.log10(v) - math.log10(lo)) / (math.log10(hi) - math.log10(lo))
+        return x0 + frac * (x1 - x0)
+
+    base_x = sx(1.0)
+    rows_bottom = top + row_h * len(rows) - 22
+    # gridlines
+    for tick in (1, 10, 100, 1000):
+        gx = sx(tick)
+        draw.line([(gx, top - 12), (gx, rows_bottom)], fill=LINE, width=1)
+        label = f"{tick}x"
+        draw.text((gx - draw.textlength(label, font=font(12, mono=True)) / 2, rows_bottom + 10),
+                  label, font=font(12, mono=True), fill=INK3)
+
+    for i, (name, naive, early, cocktail) in enumerate(rows):
+        y = top + i * row_h
+        draw.text((pad, y + 6), name, font=font(17), fill=INK)
+        draw.text((pad, y + 30), f"{naive:.1f} ms baseline", font=font(12, mono=True), fill=INK3)
+        for j, (colour, ms) in enumerate(((AMBER, early), (CLAY, cocktail))):
+            by = y + j * (bar_h + 4)
+            speedup = naive / ms
+            label = (f"{ms:.3g} ms · {speedup:.2f}x" if speedup < 100
+                     else f"{ms:.3g} ms · {speedup:.0f}x")
+            tw = draw.textlength(label, font=font(12, mono=True))
+            if speedup >= 1.005:
+                x = sx(speedup)
+                draw.rounded_rectangle([base_x, by, max(x, base_x + 2), by + bar_h], radius=3, fill=colour)
+                if x + tw + 12 < width - pad:
+                    draw.text((x + 8, by + 1), label, font=font(12, mono=True), fill=INK2)
+                else:
+                    draw.text((x - tw - 8, by + 1), label, font=font(12, mono=True), fill=(255, 250, 240))
+            else:
+                # slower than the baseline: a hairline left of 1x, label to the right
+                # (the row to the right of the line is empty by definition)
+                draw.rounded_rectangle([base_x - 3, by, base_x, by + bar_h], radius=1,
+                                       fill=(176, 74, 48))
+                draw.text((base_x + 10, by + 1), label, font=font(12, mono=True), fill=INK2)
+
+    img.save(path, optimize=True)
+    print("wrote", path, img.size)
+
+
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
     build(1280, 400, os.path.join(OUT_DIR, "banner.png"), 0)
     build(1280, 640, os.path.join(OUT_DIR, "social-preview.png"), 1)
+    build_sorting(1280, 548, os.path.join(OUT_DIR, "sorting-shapes.png"))
 
 
 if __name__ == "__main__":

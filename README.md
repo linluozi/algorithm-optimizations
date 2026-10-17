@@ -114,6 +114,8 @@ means slower.
   every pair, and the second sweep is pure overhead.
 - On random data the two are within ±10%, which is the machine's noise floor.
 
+<img src="assets/sorting-shapes.png" alt="Speedup over plain bubble sort across five input shapes: the early exit wins on already-sorted and adjacent-swap data, the bidirectional pass wins on far-apart swaps, and both do nothing on random and reversed input" width="100%">
+
 The shape labelled "nearly sorted" in most benchmarks is the third row — 50
 swaps of arbitrary pairs, with displacements up to the full array. That is not
 "nearly sorted" in the algorithmic sense, and it is why the same code can be
@@ -194,7 +196,7 @@ benchmarks/
 tests/                  32 unittest tests
 docs/claims.md          every README claim → the case that backs it
 scripts/make_assets.py  regenerates assets/ from benchmarks/results.json
-assets/                 banner + social preview, both drawn from the results
+assets/                 banner, sorting impact map and social preview, all drawn from the results
 ```
 
 ## What this is not

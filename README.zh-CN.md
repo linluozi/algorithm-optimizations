@@ -102,6 +102,8 @@ Neumaier 补偿求和，所以 `matmul_zip` 的舍入和朴素的 `+=` 累加器
 - **完全逆序**时鸡尾酒版反而慢 3%：每一轮都在交换每一对，第二趟扫描纯属白跑。
 - 随机数据上两者相差在 ±10% 以内，也就是这台机器的噪声底。
 
+<img src="assets/sorting-shapes.png" alt="五种输入下相对朴素冒泡的加速比：已排序与相邻交换由早停取胜，远距离交换由双向取胜，随机与逆序两者都无效" width="100%">
+
 大多数 benchmark 里被标成「接近有序」的是第三行 —— 50 次任意两点交换，
 位移可达整个数组长度。它在算法意义上不是接近有序，这也正是同一份代码
 既能被引用成 10× 又能被引用成 900× 的原因。
@@ -174,7 +176,7 @@ benchmarks/
 tests/                  32 个 unittest
 docs/claims.md          每条 README 结论 → 支撑它的用例
 scripts/make_assets.py  从 benchmarks/results.json 重画 assets/ 里的图
-assets/                 banner + 社交预览，都是拿实测数据画的
+assets/                 banner、排序影响图、社交预览，都是拿实测数据画的
 ```
 
 ## 这仓库不是什么
