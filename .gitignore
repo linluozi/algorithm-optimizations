@@ -1,0 +1,30 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editors
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Local benchmark scratch output (committed results live in benchmarks/)
+bench-*.json
+bench-*.md

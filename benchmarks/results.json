@@ -1,0 +1,679 @@
+{
+  "generated_at": "2026-10-17T11:03:51+00:00",
+  "mode": "isolated",
+  "quick": false,
+  "machine": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "processor": "AMD64 Family 25 Model 117 Stepping 2, AuthenticAMD",
+    "python": "3.13.14",
+    "implementation": "CPython",
+    "cpu_count": 16
+  },
+  "cases": {
+    "sort/sorted": {
+      "group": "sorting",
+      "variants": {
+        "naive": {
+          "best_ms": 66.4576000017405,
+          "median_ms": 66.94659999993746,
+          "runs_ms": [
+            66.4576,
+            66.6049,
+            66.9466,
+            67.1753,
+            69.381
+          ],
+          "case": "sort/sorted",
+          "variant": "naive"
+        },
+        "early": {
+          "best_ms": 0.07159999950090423,
+          "median_ms": 0.07209999967017211,
+          "runs_ms": [
+            0.0716,
+            0.0718,
+            0.0721,
+            0.0724,
+            0.0753
+          ],
+          "case": "sort/sorted",
+          "variant": "early"
+        },
+        "cocktail": {
+          "best_ms": 0.0718000010238029,
+          "median_ms": 0.07259999983943999,
+          "runs_ms": [
+            0.0718,
+            0.0726,
+            0.0726,
+            0.0735,
+            0.0741
+          ],
+          "case": "sort/sorted",
+          "variant": "cocktail"
+        }
+      }
+    },
+    "sort/adjacent-50": {
+      "group": "sorting",
+      "variants": {
+        "naive": {
+          "best_ms": 66.00129999787896,
+          "median_ms": 67.5589000020409,
+          "runs_ms": [
+            66.0013,
+            66.5925,
+            67.5589,
+            69.9672,
+            73.7958
+          ],
+          "case": "sort/adjacent-50",
+          "variant": "naive"
+        },
+        "early": {
+          "best_ms": 0.1430000011168886,
+          "median_ms": 0.1432999997632578,
+          "runs_ms": [
+            0.143,
+            0.1432,
+            0.1433,
+            0.1437,
+            0.1544
+          ],
+          "case": "sort/adjacent-50",
+          "variant": "early"
+        },
+        "cocktail": {
+          "best_ms": 0.17410000145900995,
+          "median_ms": 0.18500000078347512,
+          "runs_ms": [
+            0.1741,
+            0.1814,
+            0.185,
+            0.1875,
+            0.1975
+          ],
+          "case": "sort/adjacent-50",
+          "variant": "cocktail"
+        }
+      }
+    },
+    "sort/far-50": {
+      "group": "sorting",
+      "variants": {
+        "naive": {
+          "best_ms": 68.54960000055144,
+          "median_ms": 69.98609999936889,
+          "runs_ms": [
+            68.5496,
+            69.6176,
+            69.9861,
+            70.2558,
+            70.6672
+          ],
+          "case": "sort/far-50",
+          "variant": "naive"
+        },
+        "early": {
+          "best_ms": 69.56390000050305,
+          "median_ms": 69.99699999869335,
+          "runs_ms": [
+            69.5639,
+            69.8255,
+            69.997,
+            70.9497,
+            77.3881
+          ],
+          "case": "sort/far-50",
+          "variant": "early"
+        },
+        "cocktail": {
+          "best_ms": 6.819600002927473,
+          "median_ms": 6.910500000230968,
+          "runs_ms": [
+            6.8196,
+            6.8735,
+            6.9105,
+            6.9435,
+            6.9819
+          ],
+          "case": "sort/far-50",
+          "variant": "cocktail"
+        }
+      }
+    },
+    "sort/random": {
+      "group": "sorting",
+      "variants": {
+        "naive": {
+          "best_ms": 111.86969999835128,
+          "median_ms": 114.54520000188495,
+          "runs_ms": [
+            111.8697,
+            113.0019,
+            114.5452,
+            115.5818,
+            116.5937
+          ],
+          "case": "sort/random",
+          "variant": "naive"
+        },
+        "early": {
+          "best_ms": 114.52230000213603,
+          "median_ms": 116.20800000309828,
+          "runs_ms": [
+            114.5223,
+            115.7665,
+            116.208,
+            116.8143,
+            117.2275
+          ],
+          "case": "sort/random",
+          "variant": "early"
+        },
+        "cocktail": {
+          "best_ms": 102.40300000077696,
+          "median_ms": 104.16579999946407,
+          "runs_ms": [
+            102.403,
+            103.6584,
+            104.1658,
+            105.1208,
+            106.6685
+          ],
+          "case": "sort/random",
+          "variant": "cocktail"
+        }
+      }
+    },
+    "sort/reversed": {
+      "group": "sorting",
+      "variants": {
+        "naive": {
+          "best_ms": 150.30339999793796,
+          "median_ms": 159.60500000073807,
+          "runs_ms": [
+            150.3034,
+            151.3236,
+            159.605,
+            162.6131,
+            184.9342
+          ],
+          "case": "sort/reversed",
+          "variant": "naive"
+        },
+        "early": {
+          "best_ms": 151.1735000021872,
+          "median_ms": 154.98440000010305,
+          "runs_ms": [
+            151.1735,
+            153.4971,
+            154.9844,
+            155.269,
+            157.1448
+          ],
+          "case": "sort/reversed",
+          "variant": "early"
+        },
+        "cocktail": {
+          "best_ms": 155.27609999844572,
+          "median_ms": 158.21259999938775,
+          "runs_ms": [
+            155.2761,
+            156.9965,
+            158.2126,
+            159.315,
+            162.8424
+          ],
+          "case": "sort/reversed",
+          "variant": "cocktail"
+        }
+      }
+    },
+    "min-max/3000k": {
+      "group": "min-max",
+      "variants": {
+        "naive": {
+          "best_ms": 80.82279999871389,
+          "median_ms": 85.27700000195182,
+          "runs_ms": [
+            80.8228,
+            82.9738,
+            85.277,
+            87.9899,
+            91.6341
+          ],
+          "case": "min-max/3000k",
+          "variant": "naive"
+        },
+        "naive-nocopy": {
+          "best_ms": 88.08000000135507,
+          "median_ms": 91.51319999728003,
+          "runs_ms": [
+            88.08,
+            91.1044,
+            91.5132,
+            97.5794,
+            114.1219
+          ],
+          "case": "min-max/3000k",
+          "variant": "naive-nocopy"
+        },
+        "pairwise-indexed": {
+          "best_ms": 127.72949999998673,
+          "median_ms": 130.77420000263373,
+          "runs_ms": [
+            127.7295,
+            129.1272,
+            130.7742,
+            130.862,
+            133.6347
+          ],
+          "case": "min-max/3000k",
+          "variant": "pairwise-indexed"
+        },
+        "pairwise": {
+          "best_ms": 60.098300000390736,
+          "median_ms": 61.75689999872702,
+          "runs_ms": [
+            60.0983,
+            61.0368,
+            61.7569,
+            62.2373,
+            70.9907
+          ],
+          "case": "min-max/3000k",
+          "variant": "pairwise"
+        },
+        "builtin": {
+          "best_ms": 38.538699998753145,
+          "median_ms": 39.165599999250844,
+          "runs_ms": [
+            38.5387,
+            39.1543,
+            39.1656,
+            39.7217,
+            44.7332
+          ],
+          "case": "min-max/3000k",
+          "variant": "builtin"
+        }
+      }
+    },
+    "fib/naive/25": {
+      "group": "fibonacci",
+      "variants": {
+        "naive": {
+          "best_ms": 9.63679999767919,
+          "median_ms": 9.872499998891726,
+          "runs_ms": [
+            9.6368,
+            9.8725
+          ],
+          "case": "fib/naive/25",
+          "variant": "naive"
+        }
+      }
+    },
+    "fib/naive/28": {
+      "group": "fibonacci",
+      "variants": {
+        "naive": {
+          "best_ms": 38.3419000027061,
+          "median_ms": 38.48619999916991,
+          "runs_ms": [
+            38.3419,
+            38.4862
+          ],
+          "case": "fib/naive/28",
+          "variant": "naive"
+        }
+      }
+    },
+    "fib/naive/30": {
+      "group": "fibonacci",
+      "variants": {
+        "naive": {
+          "best_ms": 107.46370000197203,
+          "median_ms": 116.74940000011702,
+          "runs_ms": [
+            107.4637,
+            116.7494
+          ],
+          "case": "fib/naive/30",
+          "variant": "naive"
+        }
+      }
+    },
+    "fib/naive/32": {
+      "group": "fibonacci",
+      "variants": {
+        "naive": {
+          "best_ms": 282.3489000002155,
+          "median_ms": 290.5761999973038,
+          "runs_ms": [
+            282.3489,
+            290.5762
+          ],
+          "case": "fib/naive/32",
+          "variant": "naive"
+        }
+      }
+    },
+    "fib/dp/100": {
+      "group": "fibonacci",
+      "variants": {
+        "dp": {
+          "best_ms": 0.0022000021999701858,
+          "median_ms": 0.0024000000848900527,
+          "runs_ms": [
+            0.0022,
+            0.0023,
+            0.0024,
+            0.0028,
+            0.0038
+          ],
+          "case": "fib/dp/100",
+          "variant": "dp"
+        }
+      }
+    },
+    "fib/dp/1000": {
+      "group": "fibonacci",
+      "variants": {
+        "dp": {
+          "best_ms": 0.02769999991869554,
+          "median_ms": 0.029899998480686918,
+          "runs_ms": [
+            0.0277,
+            0.0284,
+            0.0299,
+            0.0302,
+            0.0305
+          ],
+          "case": "fib/dp/1000",
+          "variant": "dp"
+        }
+      }
+    },
+    "fib/dp/10000": {
+      "group": "fibonacci",
+      "variants": {
+        "dp": {
+          "best_ms": 0.9147000018856488,
+          "median_ms": 0.936699998419499,
+          "runs_ms": [
+            0.9147,
+            0.9353,
+            0.9367,
+            0.9385,
+            1.34
+          ],
+          "case": "fib/dp/10000",
+          "variant": "dp"
+        }
+      }
+    },
+    "fib/dp/100000": {
+      "group": "fibonacci",
+      "variants": {
+        "dp": {
+          "best_ms": 63.423100000363775,
+          "median_ms": 64.92459999935818,
+          "runs_ms": [
+            63.4231,
+            64.7328,
+            64.9246,
+            65.4201,
+            66.4981
+          ],
+          "case": "fib/dp/100000",
+          "variant": "dp"
+        }
+      }
+    },
+    "fib/matrix/100": {
+      "group": "fibonacci",
+      "variants": {
+        "matrix": {
+          "best_ms": 0.0026000016077887267,
+          "median_ms": 0.0030000010156072676,
+          "runs_ms": [
+            0.0026,
+            0.0027,
+            0.003,
+            0.0038,
+            0.0045
+          ],
+          "case": "fib/matrix/100",
+          "variant": "matrix"
+        }
+      }
+    },
+    "fib/matrix/1000": {
+      "group": "fibonacci",
+      "variants": {
+        "matrix": {
+          "best_ms": 0.006599999323952943,
+          "median_ms": 0.007099999493220821,
+          "runs_ms": [
+            0.0066,
+            0.0069,
+            0.0071,
+            0.0077,
+            0.0095
+          ],
+          "case": "fib/matrix/1000",
+          "variant": "matrix"
+        }
+      }
+    },
+    "fib/matrix/10000": {
+      "group": "fibonacci",
+      "variants": {
+        "matrix": {
+          "best_ms": 0.22710000121151097,
+          "median_ms": 0.33519999851705506,
+          "runs_ms": [
+            0.2271,
+            0.2913,
+            0.3352,
+            0.4037,
+            0.411
+          ],
+          "case": "fib/matrix/10000",
+          "variant": "matrix"
+        }
+      }
+    },
+    "fib/matrix/100000": {
+      "group": "fibonacci",
+      "variants": {
+        "matrix": {
+          "best_ms": 7.962399999087211,
+          "median_ms": 8.0180000004475,
+          "runs_ms": [
+            7.9624,
+            7.9671,
+            8.018,
+            8.1675,
+            8.9518
+          ],
+          "case": "fib/matrix/100000",
+          "variant": "matrix"
+        }
+      }
+    },
+    "matmul/128": {
+      "group": "matmul",
+      "variants": {
+        "naive": {
+          "best_ms": 69.48790000024019,
+          "median_ms": 71.13989999925252,
+          "runs_ms": [
+            69.4879,
+            70.2813,
+            71.1399,
+            72.8226,
+            72.8745
+          ],
+          "case": "matmul/128",
+          "variant": "naive"
+        },
+        "blocked-32": {
+          "best_ms": 81.83260000078008,
+          "median_ms": 83.28020000044489,
+          "runs_ms": [
+            81.8326,
+            82.4169,
+            83.2802,
+            83.955,
+            97.6178
+          ],
+          "case": "matmul/128",
+          "variant": "blocked-32"
+        },
+        "zip": {
+          "best_ms": 51.790299999993294,
+          "median_ms": 53.376900003058836,
+          "runs_ms": [
+            51.7903,
+            53.2734,
+            53.3769,
+            54.5375,
+            54.6472
+          ],
+          "case": "matmul/128",
+          "variant": "zip"
+        }
+      }
+    },
+    "matmul/160": {
+      "group": "matmul",
+      "variants": {
+        "naive": {
+          "best_ms": 149.27430000170716,
+          "median_ms": 157.13169999798993,
+          "runs_ms": [
+            149.2743,
+            153.7886,
+            157.1317,
+            160.9895,
+            161.9515
+          ],
+          "case": "matmul/160",
+          "variant": "naive"
+        },
+        "blocked-8": {
+          "best_ms": 187.2060000023339,
+          "median_ms": 192.09509999927832,
+          "runs_ms": [
+            187.206,
+            189.8033,
+            192.0951,
+            193.8914,
+            193.9115
+          ],
+          "case": "matmul/160",
+          "variant": "blocked-8"
+        },
+        "blocked-32": {
+          "best_ms": 153.44759999788948,
+          "median_ms": 157.6184999976249,
+          "runs_ms": [
+            153.4476,
+            154.8834,
+            157.6185,
+            165.7432,
+            168.7383
+          ],
+          "case": "matmul/160",
+          "variant": "blocked-32"
+        },
+        "blocked-64": {
+          "best_ms": 150.46820000134176,
+          "median_ms": 157.09029999925406,
+          "runs_ms": [
+            150.4682,
+            153.7635,
+            157.0903,
+            166.4769,
+            186.7045
+          ],
+          "case": "matmul/160",
+          "variant": "blocked-64"
+        },
+        "zip": {
+          "best_ms": 98.99640000003274,
+          "median_ms": 104.89169999709702,
+          "runs_ms": [
+            98.9964,
+            102.8327,
+            104.8917,
+            105.1929,
+            106.6713
+          ],
+          "case": "matmul/160",
+          "variant": "zip"
+        }
+      }
+    },
+    "matmul/192": {
+      "group": "matmul",
+      "variants": {
+        "naive": {
+          "best_ms": 242.4618000004557,
+          "median_ms": 252.40539999867906,
+          "runs_ms": [
+            242.4618,
+            251.2622,
+            252.4054,
+            259.7087,
+            312.6813
+          ],
+          "case": "matmul/192",
+          "variant": "naive"
+        },
+        "blocked-32": {
+          "best_ms": 271.1158999991312,
+          "median_ms": 274.4645999991917,
+          "runs_ms": [
+            271.1159,
+            274.2271,
+            274.4646,
+            278.3393,
+            293.8047
+          ],
+          "case": "matmul/192",
+          "variant": "blocked-32"
+        },
+        "blocked-64": {
+          "best_ms": 252.80629999906523,
+          "median_ms": 254.88830000176677,
+          "runs_ms": [
+            252.8063,
+            253.4993,
+            254.8883,
+            257.276,
+            260.8306
+          ],
+          "case": "matmul/192",
+          "variant": "blocked-64"
+        },
+        "zip": {
+          "best_ms": 159.7485999991477,
+          "median_ms": 163.14820000116015,
+          "runs_ms": [
+            159.7486,
+            161.4506,
+            163.1482,
+            163.3545,
+            168.7883
+          ],
+          "case": "matmul/192",
+          "variant": "zip"
+        }
+      }
+    }
+  }
+}
