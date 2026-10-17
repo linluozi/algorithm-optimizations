@@ -58,10 +58,15 @@ def font(size, bold=False, mono=False):
 
 
 def load_rows():
+    """Return (rows, machine label) straight from the measured JSON."""
     with open(RESULTS, encoding="utf-8") as fh:
         data = json.load(fh)
     variants = data["cases"]["min-max/3000k"]["variants"]
-    return [(LABELS[k], variants[k]["best_ms"]) for k in LABELS if k in variants]
+    rows = [(LABELS[k], variants[k]["best_ms"]) for k in LABELS if k in variants]
+    machine = data["machine"]
+    os_family = machine["platform"].split("-")[0]
+    label = f"{os_family} · {machine['implementation']} {machine['python']}"
+    return rows, label
 
 
 def wash(img, height):
@@ -103,7 +108,7 @@ def build(width, height, path, scale):
     """scale = 0 for the wide banner, 1 for the taller social card."""
     img = Image.new("RGB", (width, height), PAPER)
     draw = wash(img, height)
-    rows = load_rows()
+    rows, machine_label = load_rows()
 
     pad = 56
     if scale == 0:
@@ -119,7 +124,7 @@ def build(width, height, path, scale):
 
     draw.text((pad, eyebrow_y), "ALGORITHM OPTIMIZATIONS · MEASURED, NOT ASSERTED",
               font=font(12, mono=True), fill=INK3)
-    right = "CPython 3.13 / Ryzen 7 H 255"
+    right = machine_label
     tw = draw.textlength(right, font=font(12, mono=True))
     draw.text((width - pad - tw, eyebrow_y), right, font=font(12, mono=True), fill=INK3)
 

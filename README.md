@@ -12,12 +12,13 @@ the two that look most convincing on paper.
 | # | The optimization | On paper | Measured here | Verdict |
 |---|---|---|---|---|
 | 1 | Pairwise min/max | `2(n-1)` → `3⌊n/2⌋` comparisons, −25% | **1.58× slower** than the naive loop | ✗ |
-| 2 | Cache-blocked matmul | better locality, fewer cache misses | **1.01–1.25×** (never a gain) | ✗ |
+| 2 | Cache-blocked matmul | better locality, fewer cache misses | **1.01–1.25×**, sign not reproducible | ✗ |
 | 3 | Bubble → cocktail shaker | fewer passes, early exit | **926×** on sorted, **0.97×** on reversed | ~ |
 | 4 | Naive → DP → matrix power | `O(φⁿ)` → `O(n)` → `O(log n)` | 282 ms → 0.028 ms → 0.0066 ms | ✓ |
 
-All numbers: CPython 3.13.14, Windows 11, Ryzen 7 H 255, best of 5 in isolated
-processes. Full tables in [`benchmarks/RESULTS.md`](benchmarks/RESULTS.md),
+All numbers: CPython 3.13.14, Windows 11, Ryzen 7 H 255, best of N in isolated
+processes (N = 5; N = 2 for the exponential Fibonacci case, which would otherwise
+dominate the run). Full tables in [`benchmarks/RESULTS.md`](benchmarks/RESULTS.md),
 raw data in [`benchmarks/results.json`](benchmarks/results.json). Each claim is
 mapped to the command that produced it in [`docs/claims.md`](docs/claims.md).
 
@@ -75,9 +76,11 @@ pay for itself when the interpreter is 20× more expensive than the miss.
 | n = 160 | 149.27 ms | 187.21 ms (1.25×) | 153.45 ms (1.03×) | 150.47 ms (1.01×) | 99.00 ms (**0.66×**) |
 | n = 192 | 242.46 ms | — | 271.12 ms (1.12×) | 252.81 ms (1.04×) | 159.75 ms (**0.66×**) |
 
-The blocking effect does not track block size or matrix size — that is the
-signature of noise plus loop overhead, not of cache reuse. The version that does
-win moves the inner product into C: transpose `B` once, then
+The blocking effect does not track block size or matrix size, and it does not
+even keep its sign: an interleaved run of the same `n = 160` case put
+`blocked-64` at 0.91×, i.e. 9% *ahead*. An effect that flips between runs is an
+effect smaller than the noise. The version that does win moves the inner product
+into C: transpose `B` once, then
 `sum(map(mul, row, col))` runs the whole row in C. Same `O(n³)` work, 1.3–1.5×
 less time.
 
@@ -145,7 +148,7 @@ cd algorithm-optimizations
 python -m benchmarks.run_all --json benchmarks/results.json --markdown benchmarks/RESULTS.md
 python -m benchmarks.run_all --mode interleaved   # ratio check, see below
 python benchmarks/count_comparisons.py            # comparison counts, no timing
-python -m unittest discover -s tests -t .         # 31 tests
+python -m unittest discover -s tests -t .         # 32 tests
 ```
 
 `python -m benchmarks.run_all --quick` runs the same harness at small sizes in
@@ -188,8 +191,10 @@ benchmarks/
   run_all.py            python -m benchmarks.run_all
   count_comparisons.py  counts < and > instead of nanoseconds
   RESULTS.md            generated tables
-tests/                  31 unittest tests
+tests/                  32 unittest tests
 docs/claims.md          every README claim → the case that backs it
+scripts/make_assets.py  regenerates assets/ from benchmarks/results.json
+assets/                 banner + social preview, both drawn from the results
 ```
 
 ## What this is not

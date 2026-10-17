@@ -10,7 +10,7 @@
     "cpu_count": 16
   },
   "cases": {
-    "sort/sorted": {
+    "sort/sorted/2000": {
       "group": "sorting",
       "variants": {
         "naive": {
@@ -54,7 +54,7 @@
         }
       }
     },
-    "sort/adjacent-50": {
+    "sort/adjacent-50/2000": {
       "group": "sorting",
       "variants": {
         "naive": {
@@ -98,7 +98,7 @@
         }
       }
     },
-    "sort/far-50": {
+    "sort/far-50/2000": {
       "group": "sorting",
       "variants": {
         "naive": {
@@ -142,7 +142,7 @@
         }
       }
     },
-    "sort/random": {
+    "sort/random/2000": {
       "group": "sorting",
       "variants": {
         "naive": {
@@ -186,7 +186,7 @@
         }
       }
     },
-    "sort/reversed": {
+    "sort/reversed/2000": {
       "group": "sorting",
       "variants": {
         "naive": {

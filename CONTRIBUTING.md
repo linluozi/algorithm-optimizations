@@ -63,7 +63,7 @@ If a "simplification" makes two of those paragraphs false, it isn't one.
 ## Running the checks
 
 ```bash
-python -m unittest discover -s tests -t . -v   # 31 tests, ~0.5 s
+python -m unittest discover -s tests -t . -v   # 32 tests, ~0.5 s
 python benchmarks/count_comparisons.py          # comparison counts, ~1 s
 python -m benchmarks.run_all --quick            # harness smoke test, ~5 s
 ```

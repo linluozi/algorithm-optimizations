@@ -32,7 +32,8 @@ def sort_data(shape: str, n: int = 2000) -> list:
     ``reversed``     -- descending.
     """
     base = list(range(n))
-    if shape == "sorted":
+    if shape == "sorted" or n < 2:
+        # nothing to shuffle on 0 or 1 elements, whatever the shape asked for
         return base
     if shape == "reversed":
         return base[::-1]

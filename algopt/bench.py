@@ -103,7 +103,7 @@ def _matmul_resolve(variant):
 
 def _sort_case(shape, n, repeat):
     return Case(
-        id=f"sort/{shape}",
+        id=f"sort/{shape}/{n}",
         group="sorting",
         variants=tuple(SORT_FNS),
         repeat=repeat,
@@ -264,13 +264,31 @@ def run_interleaved(cases, quick: bool, note=print) -> dict:
 # --------------------------------------------------------------------------- #
 # reporting
 # --------------------------------------------------------------------------- #
-def to_markdown(results: dict, mode: str, info: dict) -> str:
+def to_markdown(results: dict, mode: str, info: dict, quick: bool = False,
+                generated_at: str | None = None) -> str:
+    """Render the results table.
+
+    ``generated_at`` is the *measurement* timestamp (ISO 8601). It is passed in
+    rather than read from the clock so that re-rendering an old JSON file does
+    not relabel stale numbers as fresh.
+    """
+    if generated_at:
+        stamp = generated_at.replace("T", " ")[:16] + " UTC"
+    else:
+        stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     lines = [
         "# Measured results",
         "",
-        f"Generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} "
-        f"in `{mode}` mode.",
+        f"Generated {stamp} in `{mode}` mode.",
         "",
+    ]
+    if quick:
+        lines += [
+            "> **Quick run.** Sizes are reduced for CI. These are not the numbers",
+            "> quoted in the README and must not be pasted into it.",
+            "",
+        ]
+    lines += [
         f"- Platform: `{info['platform']}`",
         f"- Processor: `{info['processor']}`",
         f"- Python: `{info['python']}` ({info['implementation']})",
@@ -330,6 +348,12 @@ def main(argv=None) -> int:
     runner = run_isolated if args.mode == "isolated" else run_interleaved
     results = runner(cases, args.quick)
 
+    if args.quick and (args.json or args.markdown):
+        print(
+            "\nwarning: --quick uses reduced sizes. The files below are a smoke test,\n"
+            "         not the numbers quoted in the README."
+        )
+
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "mode": args.mode,
@@ -344,7 +368,7 @@ def main(argv=None) -> int:
         print(f"\nwrote {args.json}")
     if args.markdown:
         with open(args.markdown, "w", encoding="utf-8", newline="\n") as fh:
-            fh.write(to_markdown(results, args.mode, info))
+            fh.write(to_markdown(results, args.mode, info, args.quick, payload["generated_at"]))
         print(f"wrote {args.markdown}")
     return 0
 

@@ -11,11 +11,12 @@
 | # | 优化 | 纸面上 | 本机实测 | 判定 |
 |---|---|---|---|---|
 | 1 | 成对比较求 min/max | `2(n-1)` → `3⌊n/2⌋`，少 25% 比较 | 比朴素循环**慢 1.58 倍** | ✗ |
-| 2 | 矩阵分块（cache blocking） | 提高局部性、减少 cache miss | **1.01–1.25 倍**（从无收益） | ✗ |
+| 2 | 矩阵分块（cache blocking） | 提高局部性、减少 cache miss | **1.01–1.25 倍**，符号不稳定 | ✗ |
 | 3 | 冒泡 → 鸡尾酒排序 | 双向 + 早停，轮次更少 | 已排序 **929×**，逆序 **0.97×** | ~ |
 | 4 | 朴素递归 → DP → 矩阵快速幂 | `O(φⁿ)` → `O(n)` → `O(log n)` | 282 ms → 0.028 ms → 0.0066 ms | ✓ |
 
-全部数据：CPython 3.13.14 / Windows 11 / Ryzen 7 H 255，独立进程、best of 5。
+全部数据：CPython 3.13.14 / Windows 11 / Ryzen 7 H 255，独立进程、best of N
+（N = 5；指数级的 Fibonacci 那一组 N = 2，否则整轮会被它拖住）。
 完整表格见 [`benchmarks/RESULTS.md`](benchmarks/RESULTS.md)，原始数据见
 [`benchmarks/results.json`](benchmarks/results.json)。每条结论对应哪条命令，
 见 [`docs/claims.md`](docs/claims.md)。
@@ -68,8 +69,9 @@
 | n = 160 | 149.27 ms | 187.21 ms (1.25×) | 153.45 ms (1.03×) | 150.47 ms (1.01×) | 99.00 ms (**0.66×**) |
 | n = 192 | 242.46 ms | — | 271.12 ms (1.12×) | 252.81 ms (1.04×) | 159.75 ms (**0.66×**) |
 
-分块的收益既不随块大小变化，也不随矩阵规模变化 —— 这是「噪声 + 循环开销」的
-特征，不是 cache 复用的特征。真正有效的是把内积交给 C：转置一次 `B`，
+分块的收益既不随块大小变化，也不随矩阵规模变化，连符号都不稳定：同一个
+`n = 160` 的用例换成交错模式，`blocked-64` 跑出 0.91×，也就是快 9%。一个会来回
+翻符号的效应，就是比噪声还小的效应。真正有效的是把内积交给 C：转置一次 `B`，
 再用 `sum(map(mul, row, col))` 让整行在 C 里算完。同样的 `O(n³)` 工作量，
 时间少 1.3–1.5 倍。
 
@@ -131,7 +133,7 @@ cd algorithm-optimizations
 python -m benchmarks.run_all --json benchmarks/results.json --markdown benchmarks/RESULTS.md
 python -m benchmarks.run_all --mode interleaved   # 比值复核，见下
 python benchmarks/count_comparisons.py            # 只数比较次数，不计时
-python -m unittest discover -s tests -t .         # 31 个测试
+python -m unittest discover -s tests -t .         # 32 个测试
 ```
 
 `python -m benchmarks.run_all --quick` 用同样一套 harness 跑小规模，约 5 秒 ——
@@ -169,8 +171,10 @@ benchmarks/
   run_all.py            python -m benchmarks.run_all
   count_comparisons.py  数 < 和 >，不数纳秒
   RESULTS.md            生成的表格
-tests/                  31 个 unittest
+tests/                  32 个 unittest
 docs/claims.md          每条 README 结论 → 支撑它的用例
+scripts/make_assets.py  从 benchmarks/results.json 重画 assets/ 里的图
+assets/                 banner + 社交预览，都是拿实测数据画的
 ```
 
 ## 这仓库不是什么

@@ -1,8 +1,10 @@
 """Fibonacci numbers: exponential recursion, linear DP, logarithmic matrix power.
 
 The complexity ladder is real -- the naive version roughly multiplies by 1.6 per
-increment of n (golden ratio), and the matrix version overtakes the DP around
-n = 300-1000. But read the wall-clock table, not just the exponents: Python's
+increment of n (golden ratio). At n = 100 the DP is still 18% ahead; at n = 1000
+the matrix version is 4.2x ahead. The crossover is somewhere between the two.
+
+But read the wall-clock table, not just the exponents: Python's
 big integers make *both* fast versions grow faster than their loop count
 suggests, because the numbers themselves grow.
 

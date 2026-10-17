@@ -3,8 +3,8 @@
 Cache blocking is what you do in C: it turns a stream of cache misses into
 reuse. CPython never gets that far -- the interpreter costs roughly 100 ns per
 inner-product step, while an L2 miss costs a few nanoseconds -- so blocking
-measures as *no improvement at all* here, at any block size and any size we
-tried.
+measures within noise here, at every block size and size we tried, and the sign
+of the difference does not reproduce between runs.
 
 The version that does help moves the inner product into C:
 ``sum(map(mul, row, col))``. Same O(n^3) work, ~1.4x less time.

@@ -60,8 +60,11 @@ def _interleave(case_id: str, rounds: int, quick: bool) -> dict:
         }
         for variant, v in times.items()
     }
+    # guard against a zero-duration round (a case fast enough to read as 0.0)
     ratios = {
-        variant: sorted(times[variant][i] / times[base][i] for i in range(rounds))[rounds // 2]
+        variant: sorted(
+            times[variant][i] / max(times[base][i], 1e-9) for i in range(rounds)
+        )[rounds // 2]
         for variant in times
     }
     return {"case": case_id, "rounds": rounds, "variants": variants, "ratios": ratios}

@@ -39,16 +39,25 @@ class TestCaseRegistry(unittest.TestCase):
                     self.assertTrue(callable(case.resolve(variant)))
 
     def test_lookup_by_id(self):
-        case = bench.case_by_id("sort/sorted")
+        case = bench.case_by_id("sort/sorted/2000")
         self.assertEqual(case.group, "sorting")
         with self.assertRaises(SystemExit):
             bench.case_by_id("nope")
 
-    def test_quick_mode_is_smaller(self):
+    def test_ids_encode_the_size(self):
+        # a quick run must not be able to overwrite a full run's table
         full = {c.id for c in bench.build_cases(quick=False)}
         quick = {c.id for c in bench.build_cases(quick=True)}
-        self.assertTrue(quick)
-        self.assertTrue(quick.issubset(full) or any("fib/naive/20" in c for c in quick))
+        self.assertIn("sort/sorted/2000", full)
+        self.assertIn("sort/sorted/400", quick)
+        self.assertNotIn("sort/sorted/2000", quick)
+        # the two size-dependent groups must not collide between modes
+        self.assertIn("min-max/3000k", full)
+        self.assertNotIn("min-max/3000k", quick)
+        self.assertIn("min-max/200k", quick)
+        # fib/dp/1000 is intentionally the same case in both modes: the size
+        # only shrinks for the exponential variant
+        self.assertIn("fib/dp/1000", full & quick)
 
 
 class TestGuards(unittest.TestCase):
@@ -106,6 +115,17 @@ class TestMarkdown(unittest.TestCase):
         self.assertIn("## min-max", text)
         self.assertIn("| `sort/sorted` | early | 1.0000 |", text)
         self.assertIn("ratio", text)
+
+    def test_quick_runs_are_labelled(self):
+        results = {
+            "sort/sorted/400": {
+                "group": "sorting",
+                "variants": {"naive": {"best_ms": 2.0, "median_ms": 2.1}},
+            }
+        }
+        text = bench.to_markdown(results, "isolated", bench.machine_info(), quick=True)
+        self.assertIn("Quick run", text)
+        self.assertIn("must not be pasted into it", text)
 
 
 if __name__ == "__main__":

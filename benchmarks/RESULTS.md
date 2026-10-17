@@ -1,6 +1,6 @@
 # Measured results
 
-Generated 2026-10-17 11:08 UTC in `isolated` mode.
+Generated 2026-10-17 11:03 UTC in `isolated` mode.
 
 - Platform: `Windows-11-10.0.26300-SP0`
 - Processor: `AMD64 Family 25 Model 117 Stepping 2, AuthenticAMD`
@@ -14,21 +14,21 @@ case (smaller is faster; below 1.00 means the variant wins).
 
 | case | variant | best ms | median ms | ratio |
 |---|---|---|---|---|
-| `sort/sorted` | naive | 66.4576 | 66.9466 | 1.000 |
-| `sort/sorted` | early | 0.0716 | 0.0721 | 0.001 |
-| `sort/sorted` | cocktail | 0.0718 | 0.0726 | 0.001 |
-| `sort/adjacent-50` | naive | 66.0013 | 67.5589 | 1.000 |
-| `sort/adjacent-50` | early | 0.1430 | 0.1433 | 0.002 |
-| `sort/adjacent-50` | cocktail | 0.1741 | 0.1850 | 0.003 |
-| `sort/far-50` | naive | 68.5496 | 69.9861 | 1.000 |
-| `sort/far-50` | early | 69.5639 | 69.9970 | 1.015 |
-| `sort/far-50` | cocktail | 6.8196 | 6.9105 | 0.099 |
-| `sort/random` | naive | 111.8697 | 114.5452 | 1.000 |
-| `sort/random` | early | 114.5223 | 116.2080 | 1.024 |
-| `sort/random` | cocktail | 102.4030 | 104.1658 | 0.915 |
-| `sort/reversed` | naive | 150.3034 | 159.6050 | 1.000 |
-| `sort/reversed` | early | 151.1735 | 154.9844 | 1.006 |
-| `sort/reversed` | cocktail | 155.2761 | 158.2126 | 1.033 |
+| `sort/sorted/2000` | naive | 66.4576 | 66.9466 | 1.000 |
+| `sort/sorted/2000` | early | 0.0716 | 0.0721 | 0.001 |
+| `sort/sorted/2000` | cocktail | 0.0718 | 0.0726 | 0.001 |
+| `sort/adjacent-50/2000` | naive | 66.0013 | 67.5589 | 1.000 |
+| `sort/adjacent-50/2000` | early | 0.1430 | 0.1433 | 0.002 |
+| `sort/adjacent-50/2000` | cocktail | 0.1741 | 0.1850 | 0.003 |
+| `sort/far-50/2000` | naive | 68.5496 | 69.9861 | 1.000 |
+| `sort/far-50/2000` | early | 69.5639 | 69.9970 | 1.015 |
+| `sort/far-50/2000` | cocktail | 6.8196 | 6.9105 | 0.099 |
+| `sort/random/2000` | naive | 111.8697 | 114.5452 | 1.000 |
+| `sort/random/2000` | early | 114.5223 | 116.2080 | 1.024 |
+| `sort/random/2000` | cocktail | 102.4030 | 104.1658 | 0.915 |
+| `sort/reversed/2000` | naive | 150.3034 | 159.6050 | 1.000 |
+| `sort/reversed/2000` | early | 151.1735 | 154.9844 | 1.006 |
+| `sort/reversed/2000` | cocktail | 155.2761 | 158.2126 | 1.033 |
 
 ## min-max
 
